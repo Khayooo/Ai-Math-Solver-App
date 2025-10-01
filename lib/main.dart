@@ -1,3 +1,4 @@
+import 'package:ai_math_solver/result%20screen/result_screen.dart';
 import 'package:ai_math_solver/scan%20screen/scan_screen.dart';
 import 'package:ai_math_solver/splash/splash_screen.dart';
 import 'package:camera/camera.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
     debugShowCheckedModeBanner: false,
-      home:  SplashScreen(),
+      // home:  SplashScreen(),
+        home:  ResultScreen(),
       // home: ScanScreen(),
 
 
