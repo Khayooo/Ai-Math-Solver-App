@@ -60,6 +60,12 @@ class AssetPaths{
   final String gallery_button = "assets/images/img_50.png";
   final String scan_screen_buttom_center_button = "assets/images/img_51.png";
   final String camera_movement_button = "assets/images/img_52.png";
+  final String done_button = "assets/images/img_53.png";
+  final String retake_pic = "assets/images/img_54.png";
+  final String result_screen_history_button = "assets/images/img_55.png";
+  final String  dotes_button = "assets/images/img_56.png";
+  final String result_screen_back_button = "assets/images/img_57.png";
+  final String result_screen_small_button = "assets/images/img_58.png";
 
 
 
