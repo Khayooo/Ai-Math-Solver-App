@@ -1,16 +1,16 @@
 import 'dart:io';
+
 import 'package:ai_math_solver/utils/app_strings.dart';
-import 'package:camera/camera.dart' ;
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../custom_widget/crop_image_custom_widget.dart';
 import '../utils/asset_paths.dart';
 
-
-
 late List<CameraDescription> _camera;
-class ScanScreen extends StatefulWidget {
 
+class ScanScreen extends StatefulWidget {
   const ScanScreen({super.key});
 
   @override
@@ -18,8 +18,6 @@ class ScanScreen extends StatefulWidget {
 }
 
 class _ScanScreenState extends State<ScanScreen> {
-
-
   late final CameraDescription camera;
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
@@ -28,16 +26,16 @@ class _ScanScreenState extends State<ScanScreen> {
   void initState() {
     initCamera();
     super.initState();
-
   }
-  late List<CameraDescription> _cameras;
-  Future<void> initCamera() async {
 
+  late List<CameraDescription> _cameras;
+
+  Future<void> initCamera() async {
     try {
       _cameras = await availableCameras();
       // back camera
       final camera = _cameras.firstWhere(
-            (cam) => cam.lensDirection == CameraLensDirection.back,
+        (cam) => cam.lensDirection == CameraLensDirection.back,
       );
 
       _controller = CameraController(
@@ -52,10 +50,7 @@ class _ScanScreenState extends State<ScanScreen> {
       debugPrint("Error initializing camera: $e");
     }
 
-    _controller = CameraController(
-      camera,
-      ResolutionPreset.max,
-    );
+    _controller = CameraController(camera, ResolutionPreset.max);
     _initializeControllerFuture = _controller?.initialize().then((_) {
       if (!mounted) {
         return;
@@ -63,6 +58,7 @@ class _ScanScreenState extends State<ScanScreen> {
       setState(() {});
     });
   }
+
   @override
   void dispose() {
     _controller?.dispose();
@@ -81,9 +77,8 @@ class _ScanScreenState extends State<ScanScreen> {
     "Chemistry",
     "Bio",
     "English",
-    "Geography"
+    "Geography",
   ];
-
 
   // Toggle flash on/off
   Future<void> toggleFlash() async {
@@ -104,7 +99,7 @@ class _ScanScreenState extends State<ScanScreen> {
 
     // Pick the camera depending on state
     final selectedCamera = _cameras.firstWhere(
-          (cam) => isFrontCamera
+      (cam) => isFrontCamera
           ? cam.lensDirection == CameraLensDirection.front
           : cam.lensDirection == CameraLensDirection.back,
     );
@@ -127,21 +122,16 @@ class _ScanScreenState extends State<ScanScreen> {
     }
   }
 
-
-  // // Toggle camera
-  // void toggleCamera() {
-  //
-  // }
   // Navigate to CropScreen
   void _navigateToCropScreen(File imageFile) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CropScreen(imageFile: imageFile, image: imageFile,),
+        builder: (context) =>
+            CropScreen(imageFile: imageFile, image: imageFile),
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +141,6 @@ class _ScanScreenState extends State<ScanScreen> {
           children: [
             // Background image
             Positioned.fill(
-
               child: FutureBuilder<void>(
                 future: _initializeControllerFuture,
                 builder: (context, snapshot) {
@@ -160,7 +149,9 @@ class _ScanScreenState extends State<ScanScreen> {
                       _controller!.value.isInitialized) {
                     return CameraPreview(_controller!);
                   } else if (snapshot.hasError) {
-                    return Center(child: Text("Camera error: ${snapshot.error}"));
+                    return Center(
+                      child: Text("Camera error: ${snapshot.error}"),
+                    );
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
@@ -177,7 +168,7 @@ class _ScanScreenState extends State<ScanScreen> {
                 children: [
                   const Icon(Icons.arrow_back, color: Colors.white, size: 30),
                   Text(
-                   AppStrings().scan_question,
+                    AppStrings().scan_question,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -185,10 +176,11 @@ class _ScanScreenState extends State<ScanScreen> {
                     ),
                   ),
                   GestureDetector(
-                      onTap: (){
-                        toggleFlash();
-                        },
-                      child: Image.asset(AssetPaths().flash_button ,scale: 2.5,)),
+                    onTap: () {
+                      toggleFlash();
+                    },
+                    child: Image.asset(AssetPaths().flash_button, scale: 2.5),
+                  ),
                 ],
               ),
             ),
@@ -207,7 +199,11 @@ class _ScanScreenState extends State<ScanScreen> {
                     topRight: Radius.circular(20),
                   ),
                   boxShadow: [
-                    BoxShadow(color: Colors.black26, blurRadius: 6, spreadRadius: 2),
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 6,
+                      spreadRadius: 2,
+                    ),
                   ],
                 ),
                 child: Column(
@@ -228,13 +224,19 @@ class _ScanScreenState extends State<ScanScreen> {
                               });
                             },
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
                               child: Text(
                                 subjects[index],
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                                  color: isSelected ? Colors.orange : Colors.grey,
+                                  fontWeight: isSelected
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                  color: isSelected
+                                      ? Colors.orange
+                                      : Colors.grey,
                                 ),
                               ),
                             ),
@@ -251,12 +253,14 @@ class _ScanScreenState extends State<ScanScreen> {
                       children: [
                         // Gallery button
                         GestureDetector(
-                          onTap: (){
-                            _picker.pickImage(source: ImageSource.gallery).then((XFile? file) {
-                              if (file != null) {
-                                _navigateToCropScreen(File(file.path));
-                              }
-                            });
+                          onTap: () {
+                            _picker.pickImage(source: ImageSource.gallery).then(
+                              (XFile? file) {
+                                if (file != null) {
+                                  _navigateToCropScreen(File(file.path));
+                                }
+                              },
+                            );
                           },
                           child: Image.asset(
                             AssetPaths().gallery_button,
@@ -299,7 +303,3 @@ class _ScanScreenState extends State<ScanScreen> {
     );
   }
 }
-
-
-
-
