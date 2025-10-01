@@ -191,28 +191,11 @@ class _DashboardState extends State<Dashboard> {
                               text: AppStrings().upload_image,
                               forward_button: AssetPaths().forward_button,
 
-
-
                               onPressed: () async {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                                   return const ScanScreen();
                                 }));
-
-                                // await pickImageFromCamera();
-                                //
-                                // final picker = ImagePicker();
-                                // final image = await picker.pickImage(
-                                //     source: ImageSource.camera);
-                                //
-                                // if (image != null) {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           ScanScreen(image: File(image.path)),
-                                //     ),
-                                //   );
-                                // };
+;
                               }
                             ),
 
