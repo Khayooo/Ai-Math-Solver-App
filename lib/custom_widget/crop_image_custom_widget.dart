@@ -1,8 +1,11 @@
 // CropScreen.dart
 import 'dart:io';
+import 'package:ai_math_solver/utils/asset_paths.dart';
 import 'package:ai_math_solver/utils/colors_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
+
+import '../scan screen/scan_screen.dart';
 
 class CropScreen extends StatefulWidget {
   final File image;
@@ -26,7 +29,7 @@ class _CropScreenState extends State<CropScreen> {
         AndroidUiSettings(
           toolbarTitle: 'Crop Image',
           toolbarColor: ColorsPaths().orange_color,
-          // toolbarWidgetColor: Colors.white,
+          toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false,
         ),
@@ -62,31 +65,32 @@ class _CropScreenState extends State<CropScreen> {
                 : Image.file(widget.image, fit: BoxFit.cover),
           ),
 
-          /// Top Row (Scan Question / Back Button)
-          // Positioned(
-          //   top: 40,
-          //   left: 16,
-          //   right: 16,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       // Back Button
-          //       IconButton(
-          //         icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
-          //         onPressed: () => Navigator.pop(context),
-          //       ),
-          //       const Text(
-          //         "Scan Question",
-          //         style: TextStyle(
-          //           color: Colors.white,
-          //           fontSize: 20,
-          //           fontWeight: FontWeight.bold,
-          //         ),
-          //       ),
-          //       const SizedBox(width: 40), // balance ke liye
-          //     ],
-          //   ),
-          // ),
+
+          Positioned(
+
+            bottom: 100,
+            left: 20,
+            right: 20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return const ScanScreen();
+                      }));
+                    },
+                    child: Image.asset(AssetPaths().retake_pic, scale: 2.5,)
+                ),
+                GestureDetector(
+                    onTap: (){},
+                    child: Image.asset(AssetPaths().done_button, scale: 2.5,)
+                ),
+
+              ],
+            ),
+          ),
 
           /// Bottom Rectangle Button
           // Positioned(
