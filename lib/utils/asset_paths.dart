@@ -66,6 +66,8 @@ class AssetPaths{
   final String  dotes_button = "assets/images/img_56.png";
   final String result_screen_back_button = "assets/images/img_57.png";
   final String result_screen_small_button = "assets/images/img_58.png";
+  final String export_button = "assets/images/img_59.png";
+  final String delete_button = "assets/images/img_60.png";
 
 
 
