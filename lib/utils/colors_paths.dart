@@ -24,6 +24,7 @@ class ColorsPaths {
   Color dashbord_item_11 = Color(0xFFFDF3D1);
   Color dashbord_item_12 = Color(0xFFD1F0FD);
   Color orange_color = Color(0xFFFF5D38);
+  Color white_light_color = Color(0xFFF2FAFF);
 
 
 
