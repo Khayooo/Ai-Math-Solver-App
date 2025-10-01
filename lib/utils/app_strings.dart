@@ -27,7 +27,9 @@ class AppStrings{
   final String summarise = 'Summarise';
   final String geography = 'Geography';
   final String story ='Story';
-  final String  scan_question = 'Scan Question';
+  final String scan_question = 'Scan Question';
+  final String short_answer = 'Short Answer';
+  final String answer_in_detail = 'Answer in detail';
 
 
 }
