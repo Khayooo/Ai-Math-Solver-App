@@ -30,6 +30,9 @@ class AppStrings{
   final String scan_question = 'Scan Question';
   final String short_answer = 'Short Answer';
   final String answer_in_detail = 'Answer in detail';
+  final String hint_search = 'Search your subject here....';
+  final String home = 'Home';
+  final String history = 'History';
 
 
 }
