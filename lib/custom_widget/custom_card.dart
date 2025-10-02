@@ -45,8 +45,8 @@ class _CustomCardState extends State<CustomCard> {
 
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(widget.img, height: 100,width: 95,),
-                Text(widget.text, style: TextStyle(color: ColorsPaths().white_color, fontSize: 15, fontWeight: FontWeight.w400),textAlign: TextAlign.center,),
+                Image.asset(widget.img, height: 80,width: 70,),
+                Text(widget.text, style: TextStyle(color: ColorsPaths().white_color, fontSize: 13, fontWeight: FontWeight.w400),textAlign: TextAlign.center,),
                 Padding(
                   padding: const EdgeInsets.only(left: 65),
                   child: Image.asset(widget.forward_button, height: 20,),
