@@ -21,8 +21,12 @@ class DashBoardIcons extends StatefulWidget {
 }
 
 class _DashBoardIconsState extends State<DashBoardIcons> {
+
   @override
+
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: (){
         widget.onPressed();
@@ -40,7 +44,7 @@ class _DashBoardIconsState extends State<DashBoardIcons> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(widget.icon, height: 45,),
+              Image.asset(widget.icon, height: screenHeight * 0.04,),
               SizedBox(height: 10,),
               Text(widget.text, style: TextStyle(color: ColorsPaths().text_color_dashbord, fontSize: 15, fontWeight: FontWeight.w400),textAlign: TextAlign.center,)
             ],
