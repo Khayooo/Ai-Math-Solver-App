@@ -13,6 +13,7 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -92,8 +93,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
                                     decoration: BoxDecoration(
                                       gradient:  LinearGradient(
-                                        transform: GradientRotation(0.20),
-                                        colors: [ColorsPaths().light_orange_color,ColorsPaths().orange_color ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        transform: GradientRotation(90),
+                                        colors: [ColorsPaths().gradient_color_light,ColorsPaths().gradient_color_light,],
                                       ),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -185,8 +188,10 @@ class _ResultScreenState extends State<ResultScreen> {
           Stack(
             children: [
               Container(
-                height: 300,
+                height: screenHeight.toDouble() * 0.2, // 30% of device screen height
                 margin: EdgeInsets.all(10),
+                // height: 300,
+                // margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: ColorsPaths().white_light_color,
@@ -207,16 +212,18 @@ class _ResultScreenState extends State<ResultScreen> {
                   ],
                 ),
               ),
-              // Positioned(
-              //   bottom: 0.0,
-              //   child: Container(
-              //   margin: EdgeInsets.all(10),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(12),
-              //     color: ColorsPaths().white_light_color_less_opicty,
-              // ),
-              // ),
-              // )
+              Positioned(
+                // top: 20,
+                bottom: 0.0,
+                child: Container(
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: ColorsPaths().orange_color,
+                  // color: ColorsPaths().white_light_color_less_opicty,
+              ),
+              ),
+              )
             ]
           ),
         ],
