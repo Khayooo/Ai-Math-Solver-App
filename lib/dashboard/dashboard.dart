@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'package:ai_math_solver/call%20screen/calling_screen.dart';
 import 'package:ai_math_solver/custom_widget/custom_card.dart';
 import 'package:ai_math_solver/model/dash_board_icons.dart';
 import 'package:ai_math_solver/utils/colors_paths.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '../custom_widget/buttom_navigation_bar.dart';
 import '../custom_widget/dash_board_icons.dart';
 import '../scan screen/scan_screen.dart';
@@ -19,19 +17,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-
   int currentIndex = 0;
-  // File? _image;
-  // final  _picker = ImagePicker();
-  // pickImageFromCamera() async {
-  //   final  pickedImage = await _picker.pickImage(source: ImageSource.camera);
-  //   if(pickedImage != null) {
-  //     _image = File(pickedImage.path);
-  //     setState(() {
-  //       _image;
-  //     });
-  //   }
-  // }
 
   List<DashBoardIconsModel> dashboardMenuList = [
     DashBoardIconsModel(
@@ -108,6 +94,121 @@ class _DashboardState extends State<Dashboard> {
     ),
   ];
 
+  // // testing
+  // @override
+  // Widget build(BuildContext context) {
+  //   Size size = MediaQuery.of(context).size;
+  //   return Scaffold(
+  //     body: Stack(
+  //       children: [
+  //         /// 🔹 Main Dashboard Content
+  //         Column(
+  //           children: [
+  //             // upar wala background aur top content
+  //             Stack(
+  //               children: [
+  //                 Image.asset(AssetPaths().img_background, fit: BoxFit.fill),
+  //                 Positioned(
+  //                   top: 60,
+  //                   left: 10,
+  //                   right: 0.0,
+  //                   bottom: 0.0,
+  //                   child: Container(
+  //                     height: 390,
+  //                     width: size.width,
+  //                     child: Column(
+  //                       children: [
+  //                         // 👆 tumhara pura top content yaha...
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //
+  //             SizedBox(height: 15),
+  //
+  //             // search bar
+  //             Padding(
+  //               padding: const EdgeInsets.symmetric(horizontal: 10),
+  //               child: Container(
+  //                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+  //                 decoration: BoxDecoration(
+  //                   color: Colors.white,
+  //                   borderRadius: BorderRadius.circular(25),
+  //                   boxShadow: [
+  //                     BoxShadow(
+  //                       color: Colors.black.withOpacity(0.1),
+  //                       blurRadius: 10,
+  //                       offset: Offset(0, 2),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 child: Row(
+  //                   children: [
+  //                     SizedBox(width: 12),
+  //                     Expanded(
+  //                       child: TextField(
+  //                         decoration: InputDecoration(
+  //                           hintText: AppStrings().hint_search,
+  //                           hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
+  //                           border: InputBorder.none,
+  //                           isDense: true,
+  //                           contentPadding: EdgeInsets.zero,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Icon(Icons.search, color: Colors.grey[600], size: 24),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //
+  //             /// Dashboard grid icons
+  //             Expanded(
+  //               child: GridView.builder(
+  //                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //                   crossAxisCount: 3,
+  //                   crossAxisSpacing: 10,
+  //                   mainAxisSpacing: 10,
+  //                 ),
+  //                 itemCount: dashboardMenuList.length,
+  //                 itemBuilder: (context, index) {
+  //                   return DashBoardIcons(
+  //                     icon: dashboardMenuList[index].icon,
+  //                     text: dashboardMenuList[index].text,
+  //                     color: dashboardMenuList[index].color,
+  //                     onPressed: () {
+  //                       if (dashboardMenuList[index].action == "Learning Assistant") {
+  //                         print("Learning Assistant Clicked");
+  //                       }
+  //                     },
+  //                   );
+  //                 },
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //
+  //         /// 🔹 Bottom Navigation Bar (Always on top of Dashboard)
+  //         Align(
+  //           alignment: Alignment.bottomCenter,
+  //           child: BottomNavigationBarCustom(
+  //             currentIndex: currentIndex,
+  //             onTap: (index) {
+  //               setState(() {
+  //                 currentIndex = index;
+  //               });
+  //             },
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -116,7 +217,7 @@ class _DashboardState extends State<Dashboard> {
         children: [
           Stack(
             children: [
-              Image.asset(AssetPaths().img_background, fit: BoxFit.fill),
+              Image.asset(AssetPaths().img_background, fit: BoxFit.scaleDown, height: 347,),
               Positioned(
                 top: 60,
                 left: 10,
@@ -136,16 +237,17 @@ class _DashboardState extends State<Dashboard> {
                               Text(
                                 AppStrings().ask_ai_anything,
                                 style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: ColorsPaths().white_color,
+
                                 ),
                               ),
                               Text(
                                 AppStrings().let_solve,
                                 style: TextStyle(
                                   color: ColorsPaths().white_color,
-                                  fontSize: 15,
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
@@ -178,9 +280,14 @@ class _DashboardState extends State<Dashboard> {
                               text: AppStrings().voice_chat,
                               forward_button: AssetPaths().forward_button,
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return const CallingScreen();
-                                }));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const CallingScreen();
+                                    },
+                                  ),
+                                );
                               },
                             ),
 
@@ -192,13 +299,17 @@ class _DashboardState extends State<Dashboard> {
                               forward_button: AssetPaths().forward_button,
 
                               onPressed: () async {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return const ScanScreen();
-                                }));
-;
-                              }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const ScanScreen();
+                                    },
+                                  ),
+                                );
+                                ;
+                              },
                             ),
-
                           ],
                         ),
                       ),
@@ -208,7 +319,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ],
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 5),
           //search bar
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -227,12 +338,11 @@ class _DashboardState extends State<Dashboard> {
               ),
               child: Row(
                 children: [
-
                   SizedBox(width: 12),
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: 'Search your subject here....',
+                        hintText: AppStrings().hint_search,
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
                         border: InputBorder.none,
                         isDense: true,
@@ -248,45 +358,55 @@ class _DashboardState extends State<Dashboard> {
 
           //Dashbord item Menu
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              itemCount: dashboardMenuList.length,
-              itemBuilder: (context, index) {
-                return DashBoardIcons(
-                  icon: dashboardMenuList[index].icon,
-                  text: dashboardMenuList[index].text,
-                  color: dashboardMenuList[index].color,
-                  onPressed: () {
-                    if (dashboardMenuList[index].action ==
-                        "Learning Assistant") {
-                      // ignore: avoid_print
-                      print("Learning Assistant Clicked");
-                    }
+            child: Stack(
+              children: [
+                Positioned(child:
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 80),
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: dashboardMenuList.length,
+                    itemBuilder: (context, index) {
+                      return DashBoardIcons(
+                        icon: dashboardMenuList[index].icon,
+                        text: dashboardMenuList[index].text,
+                        color: dashboardMenuList[index].color,
+                        onPressed: () {
+                          if (dashboardMenuList[index].action == "Learning Assistant") {
+
+                            print("Learning Assistant Clicked");
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),)
+                ,
+                Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: BottomNavigationBarCustom(
+                  currentIndex: currentIndex,
+                  onTap: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
                   },
-                );
-              },
+                ))
+
+              ],
             ),
           ),
 
-
           //Buttom Navigation Bar
-
-
-
         ],
       ),
-      bottomNavigationBar: BottomNavigationBarCustom(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-      ),
+      // bottomNavigationBar: ,
     );
   }
 }
