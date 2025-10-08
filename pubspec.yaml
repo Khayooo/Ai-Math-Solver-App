@@ -41,10 +41,12 @@ dependencies:
   gap: any
   external_path: any
   media_scanner: any
-  google_mlkit_text_recognition: ^0.13.0
-  google_generative_ai: ^0.4.4
-  # mainly for chat converstion and image generation
-  flutter_ai_toolkit: ^0.10.0
+  google_generative_ai: ^0.4.7
+  genai: ^0.0.1
+  flutter_gemini: ^3.0.0
+  dash_chat_2: ^0.0.21
+
+
 
 dev_dependencies:
   flutter_test:
