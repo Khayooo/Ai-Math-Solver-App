@@ -33,6 +33,10 @@ class AppStrings{
   final String hint_search = 'Search your subject here....';
   final String home = 'Home';
   final String history = 'History';
+  final String view_full_solution = 'View full solution';
+  final String ai_is_solving_your_problem = 'AI is solving your problem';
+  final String please_wait ='Please Wait...';
+
 
 
 }
