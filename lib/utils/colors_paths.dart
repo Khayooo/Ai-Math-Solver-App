@@ -33,6 +33,7 @@ class ColorsPaths {
   Color white_light_color_less_opicty = Color(0x80F2FAFF);
   Color gradient_color_dark= Color(0xFFFF5D38);
   Color gradient_color_light= Color(0xFFFF9273);
+  Color whiteOpacityColor = Color(0x88050505);
 
 
 
