@@ -70,7 +70,8 @@ class AssetPaths{
   final String delete_button = "assets/images/img_60.png";
   final String sender_avatar = "assets/images/img_61.png";
   final String receiver_avatar = "assets/images/img_62.png";
-
+  final String message_icon = "assets/images/img_63.png";
+  final String forward_button_orange = "assets/images/img_64.png";
 
 
 
