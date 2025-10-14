@@ -36,6 +36,22 @@ class AppStrings{
   final String view_full_solution = 'View full solution';
   final String ai_is_solving_your_problem = 'AI is solving your problem';
   final String please_wait ='Please Wait...';
+  final String yes_delelte = 'Yes, delete';
+  final String cancle = 'Cancle';
+  final String are_you_sure_want_to_delete_this_chat = 'Are you sure you want to delete this chat';
+  final String delete = 'delete';
+  final String Delete = 'Delete';
+  final String export = 'export';
+  final String Export = 'Export';
+  final String chat_ai = 'Chat AI';
+  final String user_name = 'User';
+  final String gemini_name = 'Gemini';
+  final String chat_history = 'Chat History';
+  final String all = 'All';
+  final String no_history_available = 'No history available.';
+
+
+
 
 
 
