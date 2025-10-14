@@ -1,14 +1,12 @@
-import 'package:ai_math_solver/result%20screen/result_screen.dart';
-import 'package:ai_math_solver/scan%20screen/scan_screen.dart';
 import 'package:ai_math_solver/splash/splash_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
+import 'history/history_screen.dart';
 
 
 
 Future<void> main () async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final cameras = await availableCameras();
   runApp(const MyApp());
 }
 
@@ -21,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
     debugShowCheckedModeBanner: false,
       home:  SplashScreen(),
+      // home: HistoryScreen(),
       //   home:  ResultScreen(),
       // home: ScanScreen(),
 

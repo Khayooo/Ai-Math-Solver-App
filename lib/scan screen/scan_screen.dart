@@ -4,14 +4,13 @@ import 'package:ai_math_solver/utils/app_strings.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../custom_widget/crop_image_custom_widget.dart';
 import '../utils/asset_paths.dart';
 
-late List<CameraDescription> _camera;
 
 class ScanScreen extends StatefulWidget {
-  const ScanScreen({super.key});
+  final String? selectedSubject;
+  const ScanScreen({super.key,  this.selectedSubject});
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
@@ -26,6 +25,18 @@ class _ScanScreenState extends State<ScanScreen> {
   void initState() {
     initCamera();
     super.initState();
+
+    // ✅ if subject is passed (e.g. Physics)
+    if (widget.selectedSubject != null) {
+      final passed = widget.selectedSubject!.toLowerCase();
+      selectedIndex = subjects.indexWhere(
+              (s) => s.toLowerCase() == passed.toLowerCase());
+      if (selectedIndex != -1) {
+        isSubjectLocked = true; // lock others
+      } else {
+        selectedIndex = 0;
+      }
+    }
   }
 
   late List<CameraDescription> _cameras;
@@ -68,16 +79,18 @@ class _ScanScreenState extends State<ScanScreen> {
   int selectedIndex = 0; // default Math selected
   bool isFrontCamera = false; // camera toggle
   bool isFlashOn = false; // flash toggle
-
+  bool isSubjectLocked = false; // subject lock
   final _picker = ImagePicker();
 
+
+
   final subjects = [
-    "Math",
-    "Physics",
-    "Chemistry",
-    "Bio",
-    "English",
-    "Geography",
+    AppStrings().math,
+    AppStrings().physics,
+    AppStrings().chemistry,
+    AppStrings().biology,
+    AppStrings().english,
+    AppStrings().geography,
   ];
 
   // Toggle flash on/off
@@ -127,8 +140,11 @@ class _ScanScreenState extends State<ScanScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            CropScreen(imageFile: imageFile, image: imageFile),
+        builder: (context) => CropScreen(
+          imageFile: imageFile,
+          selectedSubject: subjects[selectedIndex],
+          image: imageFile,
+        ),
       ),
     );
   }
@@ -217,8 +233,9 @@ class _ScanScreenState extends State<ScanScreen> {
                         itemCount: subjects.length,
                         itemBuilder: (context, index) {
                           final isSelected = index == selectedIndex;
+                          final isDisabled = isSubjectLocked && !isSelected;
                           return GestureDetector(
-                            onTap: () {
+                            onTap: isDisabled ? null : () {
                               setState(() {
                                 selectedIndex = index;
                               });

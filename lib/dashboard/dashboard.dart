@@ -3,6 +3,7 @@ import 'package:ai_math_solver/custom_widget/custom_card.dart';
 import 'package:ai_math_solver/model/dash_board_icons.dart';
 import 'package:ai_math_solver/utils/colors_paths.dart';
 import 'package:flutter/material.dart';
+import '../chat screens/chat_screen.dart';
 import '../custom_widget/buttom_navigation_bar.dart';
 import '../custom_widget/dash_board_icons.dart';
 import '../scan screen/scan_screen.dart';
@@ -17,6 +18,10 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final TextEditingController _searchController = TextEditingController();
+
+// Filtered list that updates on search
+  List<DashBoardIconsModel> filteredList = [];
   int currentIndex = 0;
 
   List<DashBoardIconsModel> dashboardMenuList = [
@@ -93,122 +98,26 @@ class _DashboardState extends State<Dashboard> {
       action: "Stories",
     ),
   ];
+  void _filterList() {
+    String query = _searchController.text.toLowerCase().trim();
 
-  // // testing
-  // @override
-  // Widget build(BuildContext context) {
-  //   Size size = MediaQuery.of(context).size;
-  //   return Scaffold(
-  //     body: Stack(
-  //       children: [
-  //         /// 🔹 Main Dashboard Content
-  //         Column(
-  //           children: [
-  //             // upar wala background aur top content
-  //             Stack(
-  //               children: [
-  //                 Image.asset(AssetPaths().img_background, fit: BoxFit.fill),
-  //                 Positioned(
-  //                   top: 60,
-  //                   left: 10,
-  //                   right: 0.0,
-  //                   bottom: 0.0,
-  //                   child: Container(
-  //                     height: 390,
-  //                     width: size.width,
-  //                     child: Column(
-  //                       children: [
-  //                         // 👆 tumhara pura top content yaha...
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //
-  //             SizedBox(height: 15),
-  //
-  //             // search bar
-  //             Padding(
-  //               padding: const EdgeInsets.symmetric(horizontal: 10),
-  //               child: Container(
-  //                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-  //                 decoration: BoxDecoration(
-  //                   color: Colors.white,
-  //                   borderRadius: BorderRadius.circular(25),
-  //                   boxShadow: [
-  //                     BoxShadow(
-  //                       color: Colors.black.withOpacity(0.1),
-  //                       blurRadius: 10,
-  //                       offset: Offset(0, 2),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 child: Row(
-  //                   children: [
-  //                     SizedBox(width: 12),
-  //                     Expanded(
-  //                       child: TextField(
-  //                         decoration: InputDecoration(
-  //                           hintText: AppStrings().hint_search,
-  //                           hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
-  //                           border: InputBorder.none,
-  //                           isDense: true,
-  //                           contentPadding: EdgeInsets.zero,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Icon(Icons.search, color: Colors.grey[600], size: 24),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ),
-  //
-  //             /// Dashboard grid icons
-  //             Expanded(
-  //               child: GridView.builder(
-  //                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //                   crossAxisCount: 3,
-  //                   crossAxisSpacing: 10,
-  //                   mainAxisSpacing: 10,
-  //                 ),
-  //                 itemCount: dashboardMenuList.length,
-  //                 itemBuilder: (context, index) {
-  //                   return DashBoardIcons(
-  //                     icon: dashboardMenuList[index].icon,
-  //                     text: dashboardMenuList[index].text,
-  //                     color: dashboardMenuList[index].color,
-  //                     onPressed: () {
-  //                       if (dashboardMenuList[index].action == "Learning Assistant") {
-  //                         print("Learning Assistant Clicked");
-  //                       }
-  //                     },
-  //                   );
-  //                 },
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //
-  //         /// 🔹 Bottom Navigation Bar (Always on top of Dashboard)
-  //         Align(
-  //           alignment: Alignment.bottomCenter,
-  //           child: BottomNavigationBarCustom(
-  //             currentIndex: currentIndex,
-  //             onTap: (index) {
-  //               setState(() {
-  //                 currentIndex = index;
-  //               });
-  //             },
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-
-
+    setState(() {
+      // When search is empty, show all items again
+      if (query.isEmpty) {
+        filteredList = List.from(dashboardMenuList);
+      } else {
+        filteredList = dashboardMenuList.where((item) {
+          return item.text.toLowerCase().contains(query) ||
+              item.action.toLowerCase().contains(query);
+        }).toList();
+      }
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    filteredList = List.from(dashboardMenuList);
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -217,7 +126,11 @@ class _DashboardState extends State<Dashboard> {
         children: [
           Stack(
             children: [
-              Image.asset(AssetPaths().img_background, fit: BoxFit.scaleDown, height: 347,),
+              Image.asset(
+                AssetPaths().img_background,
+                fit: BoxFit.scaleDown,
+                height: 347,
+              ),
               Positioned(
                 top: 60,
                 left: 10,
@@ -240,7 +153,6 @@ class _DashboardState extends State<Dashboard> {
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: ColorsPaths().white_color,
-
                                 ),
                               ),
                               Text(
@@ -272,7 +184,16 @@ class _DashboardState extends State<Dashboard> {
                               img: AssetPaths().female_dummy,
                               text: AppStrings().text_chat,
                               forward_button: AssetPaths().forward_button,
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const ChatScreen();
+                                    },
+                                  ),
+                                );
+                              },
                             ),
                             CustomCard(
                               color: ColorsPaths().card_color,
@@ -303,11 +224,13 @@ class _DashboardState extends State<Dashboard> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return const ScanScreen();
+                                      return const ScanScreen(
+                                        selectedSubject: '',
+                                      );
                                     },
                                   ),
                                 );
-                                ;
+
                               },
                             ),
                           ],
@@ -327,20 +250,15 @@ class _DashboardState extends State<Dashboard> {
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 children: [
                   SizedBox(width: 12),
                   Expanded(
                     child: TextField(
+                      controller: _searchController,
+                        onChanged: (value) => _filterList(),
                       decoration: InputDecoration(
                         hintText: AppStrings().hint_search,
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 16),
@@ -360,53 +278,133 @@ class _DashboardState extends State<Dashboard> {
           Expanded(
             child: Stack(
               children: [
-                Positioned(child:
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 80),
-                  child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: dashboardMenuList.length,
-                    itemBuilder: (context, index) {
-                      return DashBoardIcons(
-                        icon: dashboardMenuList[index].icon,
-                        text: dashboardMenuList[index].text,
-                        color: dashboardMenuList[index].color,
-                        onPressed: () {
-                          if (dashboardMenuList[index].action == "Learning Assistant") {
+                Positioned(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 95),
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
 
-                            print("Learning Assistant Clicked");
-                          }
-                        },
-                      );
+                      // search  logic
+                      itemCount: filteredList.length,
+
+                      itemBuilder: (context, index) {
+                        final item = filteredList[index];
+                        return DashBoardIcons(
+                          icon: item.icon,
+                          text: item.text,
+                          color: item.color,
+                          onPressed: () {
+                            // Use item from the filtered list for actions
+                            if (item.action ==
+                                "Learning Assistant") {
+                              print("Learning Assistant Clicked");
+                            }
+                            if (item.action  ==
+                                "Content Generation") {
+                              print("Content Generation Clicked");
+                            }
+                            if (item.action  == "Language") {
+                              print("Language");
+                            }
+                            if (item.action  ==
+                                "Easy Helper") {
+                              print("Easy Helper");
+                            }
+                            if (item.action  == "Physics") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScanScreen(selectedSubject: 'Physics'),
+                                ),
+                              );
+                            }
+                            if (item.action  ==
+                                "Chemistry") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScanScreen(selectedSubject: 'Chemistry'),
+                                ),
+                              );
+                            }
+                            if (item.action  == "Biology") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScanScreen(selectedSubject: 'Biology'),
+                                ),
+                              );
+                            }
+                            if (item.action  == "Math") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScanScreen(selectedSubject: 'Math'),
+                                ),
+                              );
+                            }
+                            if (item.action  == "English") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScanScreen(selectedSubject: 'English'),
+                                ),
+                              );
+                            }
+                            if (item.action  ==
+                                "Geography") {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScanScreen(selectedSubject: 'Geography'),
+                                ),
+                              );
+                            }
+                            if (item.action  ==
+                                "Summaries") {
+                              print("Summaries");
+                            }
+                            if (item.action  == "Stories") {
+                              print("Stories");
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: BottomNavigationBarCustom(
+                    currentIndex: currentIndex,
+                    onTap: (index) {
+                      setState(() {
+                        currentIndex = index;
+                      });
                     },
                   ),
-                ),)
-                ,
-                Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: BottomNavigationBarCustom(
-                  currentIndex: currentIndex,
-                  onTap: (index) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                ))
-
+                ),
               ],
             ),
           ),
 
-          //Buttom Navigation Bar
+
         ],
       ),
-      // bottomNavigationBar: ,
+
     );
   }
 }
